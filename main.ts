@@ -3,33 +3,53 @@ let Y = 0
 let X = 0
 led.enable(true)
 basic.forever(function () {
-    X = pins.analogReadPin(AnalogPin.P0)
-    Y = pins.analogReadPin(AnalogPin.P1)
-    B = pins.analogReadPin(AnalogPin.P2)
+    X = pins.analogReadPin(AnalogPin.P3)
+    Y = pins.analogReadPin(AnalogPin.P4)
+    B = pins.analogReadPin(AnalogPin.P0)
     serial.writeValue("X", X)
     serial.writeValue("Y", Y)
     serial.writeValue("B", B)
     basic.pause(200)
-    if (X > 420) {
-        basic.showString("R")
-        pins.digitalWritePin(DigitalPin.P13, 0)
-        pins.digitalWritePin(DigitalPin.P12, 1)
-        pins.digitalWritePin(DigitalPin.P11, 0)
-    } else if (Y > 411) {
-        basic.showString("U")
-        pins.digitalWritePin(DigitalPin.P11, 0)
-        pins.digitalWritePin(DigitalPin.P12, 0)
-        pins.digitalWritePin(DigitalPin.P13, 1)
-    } else if (X < 420) {
-        basic.showString("L")
-        pins.digitalWritePin(DigitalPin.P13, 0)
-        pins.digitalWritePin(DigitalPin.P12, 1)
-        pins.digitalWritePin(DigitalPin.P11, 0)
-    } else if (Y < 411) {
-        basic.showString("D")
-        pins.digitalWritePin(DigitalPin.P11, 1)
-        pins.digitalWritePin(DigitalPin.P12, 0)
-        pins.digitalWritePin(DigitalPin.P13, 0)
+    if (X < 650 && X > 400 && Y > 700) {
+        basic.showLeds(`
+            . . # . .
+            . . . # .
+            # # # # #
+            . . . # .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+    } else if (Y < 650 && Y > 400 && X > 700) {
+        basic.showLeds(`
+            . . # . .
+            . # # # .
+            # . # . #
+            . . # . .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+    } else if (X < 650 && X > 400 && Y < 400) {
+        basic.showLeds(`
+            . . # . .
+            . # . . .
+            # # # # #
+            . # . . .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+    } else if (Y < 650 && Y > 400 && X < 400) {
+        basic.showLeds(`
+            . . # . .
+            . . # . .
+            # . # . #
+            . # # # .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
     } else {
     	
     }
