@@ -5,7 +5,8 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.3",
+        "BrightTile": "github:dsudosborn/brighttile#9e249656a5ccc4cbb0a505677f28482bfdfaef36"
     },
     "files": [
         "main.blocks",
