@@ -31,8 +31,28 @@ function BU () {
     display.setPixelColor(60, neopixel.colors(NeoPixelColors.Blue))
     display.show()
 }
+function LOSE () {
+    for (let index = 0; index < 3; index++) {
+        display.showColor(neopixel.colors(NeoPixelColors.Red))
+        display.show()
+        basic.pause(1000)
+        display.clear()
+        display.show()
+        basic.pause(1000)
+    }
+}
+function startGame () {
+    display = neopixel.create(DigitalPin.P2, 64, NeoPixelMode.RGB)
+    range = display.range(0, 64)
+    action = -1
+    second = 5
+    while (second >= 0) {
+        basic.pause(1000)
+        second += -1
+    }
+}
 input.onButtonPressed(Button.A, function () {
-    basic.showIcon(IconNames.Silly)
+	
 })
 function GR () {
     display.clear()
@@ -101,15 +121,49 @@ function GU () {
     display.show()
 }
 function testGup () {
-    let X = 0
-    let Y = 0
     GU()
-    if (Y < 650 && Y > 400 && X > 700 && input.buttonIsPressed(Button.A)) {
-        game.addScore(1)
-        action = -1
+    if (second >= 0) {
+        let X = 0
+        let Y = 0
+        if (Y < 650 && Y > 400 && X > 700 && input.buttonIsPressed(Button.A)) {
+            basic.clearScreen()
+            basic.showLeds(`
+                . . . . .
+                . . . . #
+                . . . # .
+                # . # . .
+                . # . . .
+                `)
+            action = -1
+            display.clear()
+            gameLoop()
+        } else {
+            action = -2
+            display.clear()
+            LOSE()
+            basic.pause(2000)
+            gameLoop()
+        }
+    }
+}
+function gameLoop () {
+    random = randint(0, 7)
+    if (random == 0) {
+        BU()
+    } else if (random == 1) {
+        BD()
+    } else if (random == 2) {
+        BR()
+    } else if (random == 3) {
+        BL()
+    } else if (random == 4) {
+        GU()
+    } else if (random == 5) {
+        GD()
+    } else if (random == 6) {
+        GR()
     } else {
-        action = -2
-        game.gameOver()
+        GL()
     }
 }
 function GD () {
@@ -146,7 +200,7 @@ function GD () {
     display.show()
 }
 input.onButtonPressed(Button.B, function () {
-    basic.showIcon(IconNames.Happy)
+	
 })
 function BL () {
     display.clear()
@@ -280,22 +334,13 @@ function GL () {
     display.setPixelColor(60, neopixel.colors(NeoPixelColors.Green))
     display.show()
 }
+let random = 0
+let second = 0
 let action = 0
+let range: neopixel.Strip = null
 let display: neopixel.Strip = null
-display = neopixel.create(DigitalPin.P2, 64, NeoPixelMode.RGB)
-let range = display.range(0, 64)
-action = -1
-basic.showIcon(IconNames.Heart)
-loops.everyInterval(60000, function () {
-    GD()
-    basic.pause(2000)
-    BL()
-    basic.pause(2000)
-    GU()
-    basic.pause(2000)
-    BR()
-    basic.pause(2000)
-})
+startGame()
+testGup()
 basic.forever(function () {
 	
 })
