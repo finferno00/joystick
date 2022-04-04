@@ -45,14 +45,28 @@ function startGame () {
     display = neopixel.create(DigitalPin.P2, 64, NeoPixelMode.RGB)
     range = display.range(0, 64)
     action = -1
-    second = 5
-    while (second >= 0) {
-        basic.pause(1000)
-        second += -1
-    }
+    buttonTime = input.runningTime()
+    time2Answer = 10000
+    X = pins.analogReadPin(AnalogPin.P1)
+    Y = pins.analogReadPin(AnalogPin.P0)
+    serial.writeValue("X", X)
+    serial.writeValue("Y", Y)
+    testGup()
 }
 input.onButtonPressed(Button.A, function () {
-	
+    basic.showNumber(X)
+    if (Y < 650 && Y > 400 && X > 700) {
+        basic.clearScreen()
+        basic.showLeds(`
+            . . . . .
+            . . . . #
+            . . . # .
+            # . # . .
+            . # . . .
+            `)
+        action = -1
+        gameLoop()
+    }
 })
 function GR () {
     display.clear()
@@ -122,28 +136,10 @@ function GU () {
 }
 function testGup () {
     GU()
-    if (second >= 0) {
-        let X = 0
-        let Y = 0
-        if (Y < 650 && Y > 400 && X > 700 && input.buttonIsPressed(Button.A)) {
-            basic.clearScreen()
-            basic.showLeds(`
-                . . . . .
-                . . . . #
-                . . . # .
-                # . # . .
-                . # . . .
-                `)
-            action = -1
-            display.clear()
-            gameLoop()
-        } else {
-            action = -2
-            display.clear()
-            LOSE()
-            basic.pause(2000)
-            gameLoop()
-        }
+    if (Y < 650 && Y > 400 && X > 700 && input.buttonIsPressed(Button.A)) {
+    	
+    } else {
+    	
     }
 }
 function gameLoop () {
@@ -335,12 +331,14 @@ function GL () {
     display.show()
 }
 let random = 0
-let second = 0
+let Y = 0
+let X = 0
+let time2Answer = 0
+let buttonTime = 0
 let action = 0
 let range: neopixel.Strip = null
 let display: neopixel.Strip = null
 startGame()
-testGup()
 basic.forever(function () {
 	
 })
