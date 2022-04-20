@@ -51,7 +51,7 @@ function startGame () {
     Y = pins.analogReadPin(AnalogPin.P0)
     serial.writeValue("X", X)
     serial.writeValue("Y", Y)
-    testGup()
+    LOSE()
 }
 input.onButtonPressed(Button.A, function () {
     basic.showNumber(X)
@@ -339,6 +339,7 @@ let action = 0
 let range: neopixel.Strip = null
 let display: neopixel.Strip = null
 startGame()
+testGup()
 basic.forever(function () {
 	
 })
